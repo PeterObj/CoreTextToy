@@ -9,6 +9,7 @@
 #import "CCoreTextAttachment.h"
 
 #import "NSAttributedString_Extensions.h"
+#import "TXTypes.h"
 
 static CGFloat MyCTRunDelegateGetAscentCallback(void *refCon);
 static CGFloat MyCTRunDelegateGetDescentCallback(void *refCon);
@@ -17,7 +18,7 @@ static void MyCTRunDelegateDeallocCallback(void *refCon);
 
 @implementation CCoreTextAttachment
 
-- (id)initWithType:(ECoreTextAttachmentType)inType ascent:(CGFloat)inAscent descent:(CGFloat)inDescent width:(CGFloat)inWidth insets:(UIEdgeInsets)inInsets representedObject:(id)inRepresentedObject
+- (id)initWithType:(ECoreTextAttachmentType)inType ascent:(CGFloat)inAscent descent:(CGFloat)inDescent width:(CGFloat)inWidth insets:(TXEdgeInsets)inInsets representedObject:(id)inRepresentedObject
     {
     if ((self = [super init]) != NULL)
         {

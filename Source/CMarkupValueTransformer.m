@@ -33,10 +33,10 @@
 
 #import <CoreText/CoreText.h>
 
+#import "CMarkupValueTransformer.h"
 #import "CSimpleHTMLParser.h"
 #import "CCoreTextAttachment.h"
 #import "NSAttributedString_Extensions.h"
-#import "UIColor+Hex.h"
 
 @interface CMarkupValueTransformer ()
 @property (readwrite, nonatomic, strong) NSMutableDictionary *tagHandlers;

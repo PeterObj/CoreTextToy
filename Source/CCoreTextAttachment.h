@@ -10,6 +10,8 @@
 
 #import <CoreText/CoreText.h>
 
+#import "TXTypes.h"
+
 typedef enum {
 	kCoreTextAttachmentType_Unknown,
 	kCoreTextAttachmentType_Renderer,
@@ -25,10 +27,10 @@ typedef void (^CoreTextAttachmentRenderer)(CCoreTextAttachment *, CGContextRef,C
 @property (readonly, nonatomic, assign) CGFloat ascent;
 @property (readonly, nonatomic, assign) CGFloat descent;
 @property (readonly, nonatomic, assign) CGFloat width;
-@property (readonly, nonatomic, assign) UIEdgeInsets insets;
+@property (readonly, nonatomic, assign) TXEdgeInsets insets;
 @property (readonly, nonatomic, strong) id representedObject;
 
-- (id)initWithType:(ECoreTextAttachmentType)inType ascent:(CGFloat)inAscent descent:(CGFloat)inDescent width:(CGFloat)inWidth insets:(UIEdgeInsets)inInsets representedObject:(id)inRepresentedObject;
+- (id)initWithType:(ECoreTextAttachmentType)inType ascent:(CGFloat)inAscent descent:(CGFloat)inDescent width:(CGFloat)inWidth insets:(TXEdgeInsets)inInsets representedObject:(id)inRepresentedObject;
 - (id)initWithType:(ECoreTextAttachmentType)inType ascent:(CGFloat)inAscent descent:(CGFloat)inDescent width:(CGFloat)inWidth representedObject:(id)inRepresentedObject;
 
 - (CTRunDelegateRef)createRunDelegate;

@@ -8,8 +8,12 @@
 
 #import "CCoreTextRenderer.h"
 
-#import "CCoreTextAttachment.h"
-#import "NSAttributedString_Extensions.h"
+#import <CoreText/CoreText.h>
+#import <QuartzCore/QuartzCore.h>
+
+//#import "CCoreTextAttachment.h"
+//#import "NSAttributedString_Extensions.h"
+#import "TXTypes.h"
 
 @interface CCoreTextRenderer ()
 @property (readwrite, nonatomic, strong) NSMutableDictionary *prerenderersForAttributes;
@@ -76,13 +80,13 @@
         _size = inSize;
         _enableShadowRenderer = NO;
         
-        [_text enumerateAttribute:kShadowColorAttributeName inRange:(NSRange){ .length = _text.length } options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-            if (value != NULL)
-                {
-                _enableShadowRenderer = YES;
-                *stop = YES;
-                }
-            }];
+//        [_text enumerateAttribute:kShadowColorAttributeName inRange:(NSRange){ .length = _text.length } options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+//            if (value != NULL)
+//                {
+//                _enableShadowRenderer = YES;
+//                *stop = YES;
+//                }
+//            }];
         }
     return(self);
     }
@@ -199,8 +203,9 @@
     CFRange theFitRange;
     CGSize theSize = CTFramesetterSuggestFrameSizeWithConstraints(self.framesetter, (CFRange){ .length = (CFIndex)self.text.length }, NULL, inSize, &theFitRange);
 
-    theSize.width = roundf(MIN(theSize.width, inSize.width));
-    theSize.height = roundf(MIN(theSize.height, inSize.height));
+    // TODO - do we actually want to round here?
+    theSize.width = ceilf(MIN(theSize.width, inSize.width));
+    theSize.height = ceilf(MIN(theSize.height, inSize.height));
 
     return(theSize);
     }
@@ -258,28 +263,28 @@
                 CTRunRef theRun = (__bridge CTRunRef)obj;
 
                 // TODO: Optimisation instead of constantly saving/restoring state and setting shadow we can keep track of current shadow and only save/restore/set when there's a change.
-                NSDictionary *theAttributes = (__bridge NSDictionary *)CTRunGetAttributes(theRun);
-                CGColorRef theShadowColor = (__bridge CGColorRef)theAttributes[kShadowColorAttributeName];
-                CGSize theShadowOffset = CGSizeZero;
-                NSValue *theShadowOffsetValue = theAttributes[kShadowOffsetAttributeName];
-                if (theShadowColor != NULL && theShadowOffsetValue != NULL)
-                    {
-                    theShadowOffset = [theShadowOffsetValue CGSizeValue];
-
-                    CGFloat theShadowBlurRadius = [theAttributes[kShadowBlurRadiusAttributeName] floatValue];
-
-                    CGContextSaveGState(inContext);
-                    CGContextSetShadowWithColor(inContext, theShadowOffset, theShadowBlurRadius, theShadowColor);
-                    }
+//                NSDictionary *theAttributes = (__bridge NSDictionary *)CTRunGetAttributes(theRun);
+//                CGColorRef theShadowColor = (__bridge CGColorRef)theAttributes[kShadowColorAttributeName];
+//                CGSize theShadowOffset = CGSizeZero;
+//                NSValue *theShadowOffsetValue = theAttributes[kShadowOffsetAttributeName];
+//                if (theShadowColor != NULL && theShadowOffsetValue != NULL)
+//                    {
+//                    theShadowOffset = [theShadowOffsetValue CGSizeValue];
+//
+//                    CGFloat theShadowBlurRadius = [theAttributes[kShadowBlurRadiusAttributeName] floatValue];
+//
+//                    CGContextSaveGState(inContext);
+//                    CGContextSetShadowWithColor(inContext, theShadowOffset, theShadowBlurRadius, theShadowColor);
+//                    }
 
                 // Render!
                 CTRunDraw(theRun, inContext, (CFRange){});
 
                 // Restore state if we were in a shadow
-                if (theShadowColor != NULL && theShadowOffsetValue != NULL)
-                    {
-                    CGContextRestoreGState(inContext);
-                    }
+//                if (theShadowColor != NULL && theShadowOffsetValue != NULL)
+//                    {
+//                    CGContextRestoreGState(inContext);
+//                    }
 
                 }];
 
@@ -307,28 +312,28 @@
 
     CGContextRestoreGState(inContext);
 
-    // ### Now that the CTM is restored. Iterate through each line and render any attachments.
-    [self enumerateRuns:^(CTRunRef inRun, CGRect inRect) {
-        NSDictionary *theAttributes = (__bridge NSDictionary *)CTRunGetAttributes(inRun);
-        // ### If we have an image we draw it...
-        CCoreTextAttachment *theAttachment = theAttributes[kMarkupAttachmentAttributeName];
-		if (theAttachment != NULL)
-			{
-			inRect.origin.y *= -1;
-			inRect.origin.y += self.size.height - inRect.size.height;
-			inRect = UIEdgeInsetsInsetRect(inRect, theAttachment.insets);
-
-			if (theAttachment.type == kCoreTextAttachmentType_Renderer)
-				{
-				CoreTextAttachmentRenderer theRenderer = theAttachment.representedObject;
-				theRenderer(theAttachment, inContext, inRect);
-				}
-			else
-				{
-//				CGContextStrokeRect(inContext, inRect);
-				}
-			}
-        }];
+//    // ### Now that the CTM is restored. Iterate through each line and render any attachments.
+//    [self enumerateRuns:^(CTRunRef inRun, CGRect inRect) {
+//        NSDictionary *theAttributes = (__bridge NSDictionary *)CTRunGetAttributes(inRun);
+//        // ### If we have an image we draw it...
+//        CCoreTextAttachment *theAttachment = theAttributes[kMarkupAttachmentAttributeName];
+//		if (theAttachment != NULL)
+//			{
+//			inRect.origin.y *= -1;
+//			inRect.origin.y += self.size.height - inRect.size.height;
+//			inRect = NSEdgeInsetsInsetRect(inRect, theAttachment.insets);
+//
+//			if (theAttachment.type == kCoreTextAttachmentType_Renderer)
+//				{
+//				CoreTextAttachmentRenderer theRenderer = theAttachment.representedObject;
+//				theRenderer(theAttachment, inContext, inRect);
+//				}
+//			else
+//				{
+////				CGContextStrokeRect(inContext, inRect);
+//				}
+//			}
+//        }];
     }
 
 #pragma mark -
