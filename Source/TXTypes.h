@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE == 1
+typedef UIEdgeInsets TXEdgeInsets;
+#define TXEdgeInsetsInsetRect UIEdgeInsetsInsetRect
+#else
 typedef NSEdgeInsets TXEdgeInsets;
 
 #define TXEdgeInsetsInsetRect NSEdgeInsetsInsetRect
-
 
 @interface NSValue (NSValueCGGeometryExtensions)
 
@@ -24,3 +27,5 @@ typedef NSEdgeInsets TXEdgeInsets;
 - (CGRect)CGRectValue;
 
 @end
+
+#endif
