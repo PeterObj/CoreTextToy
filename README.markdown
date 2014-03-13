@@ -1,6 +1,8 @@
-# CoreTextToy
+ # CoreTextToy
 
 This codebase implements CCoreTextLabel, a UILabel style class that supports attributed strings and simple HTML.
+
+IMPORTANT: See https://github.com/schwa/MarkupLabel for a subset of this codebase that provides the same functionality for basic UILabels.
 
 ## License
 
