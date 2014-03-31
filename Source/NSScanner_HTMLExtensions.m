@@ -29,6 +29,7 @@
 //  authors and should not be interpreted as representing official policies, either expressed
 //  or implied, of 2011 toxicsoftware.com.
 
+#import "NSCharacterSet_HTMLExtensions.h"
 #import "NSScanner_HTMLExtensions.h"
 
 @implementation NSScanner (HTMLExtensions)
@@ -68,16 +69,16 @@
 
         if ([self scanString:@"=" intoString:NULL] == YES)
             {
-            if ([self scanString:@"\"" intoString:NULL] == NO)
+            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
                 {
                 self.scanLocation = theSavedScanLocation;
                 self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
                 return(NO);
                 }
 
-            [self scanUpToString:@"\"" intoString:&theAttributeValue];
+            [self scanUpToCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:&theAttributeValue];
 
-            if ([self scanString:@"\"" intoString:NULL] == NO)
+            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
                 {
                 self.scanLocation = theSavedScanLocation;
                 self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
@@ -184,16 +185,16 @@
 
         if ([self scanString:@"=" intoString:NULL] == YES)
             {
-            if ([self scanString:@"\"" intoString:NULL] == NO)
+            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
                 {
                 self.scanLocation = theSavedScanLocation;
                 self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
                 return(NO);
                 }
 
-            [self scanUpToString:@"\"" intoString:&theAttributeValue];
+            [self scanUpToCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:&theAttributeValue];
 
-            if ([self scanString:@"\"" intoString:NULL] == NO)
+            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
                 {
                 self.scanLocation = theSavedScanLocation;
                 self.charactersToBeSkipped = theSavedCharactersToBeSkipped;

@@ -102,8 +102,10 @@
             }
 		else if ([inTag.name isEqualToString:@"p"] == YES)
 			{
-			NSAttributedString *as = [[NSAttributedString alloc] initWithString:@"\n"];
-			[theAttributedString appendAttributedString:as];
+			    if (theAttributedString.length != 0) {
+                    NSAttributedString *as = [[NSAttributedString alloc] initWithString:@"\n"];
+                    [theAttributedString appendAttributedString:as];
+                }
 			}
         else if ([inTag.name isEqualToString:@"img"] == YES)
             {

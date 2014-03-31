@@ -43,6 +43,7 @@
 		45FF284613CD6920006D9574 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FF284413CD6920006D9574 /* MainStoryboard.storyboard */; };
 		45FF284913CD6920006D9574 /* CFreeformCoreTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45FF284813CD6920006D9574 /* CFreeformCoreTextViewController.m */; };
 		45FF286D13CD695E006D9574 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FF286C13CD695E006D9574 /* CoreText.framework */; };
+		83E4C2E2187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E4C2E1187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,8 @@
 		45FF284813CD6920006D9574 /* CFreeformCoreTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFreeformCoreTextViewController.m; sourceTree = "<group>"; };
 		45FF285013CD6920006D9574 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		45FF286C13CD695E006D9574 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		83E4C2E0187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSCharacterSet_HTMLExtensions.h; sourceTree = "<group>"; };
+		83E4C2E1187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCharacterSet_HTMLExtensions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +156,8 @@
 				37850D011496641A004AAA31 /* UIColor+Hex.m */,
 				4593F76414C7D01D00F78F92 /* NSAttributedString_Extensions.h */,
 				4593F76514C7D01D00F78F92 /* NSAttributedString_Extensions.m */,
+				83E4C2E0187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.h */,
+				83E4C2E1187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.m */,
 				45FB0A36163762A70093F35B /* UIImage+AnimatedConveniences.h */,
 				45FB0A37163762A70093F35B /* UIImage+AnimatedConveniences.m */,
 			);
@@ -337,6 +342,7 @@
 				37850D021496641A004AAA31 /* UIColor+Hex.m in Sources */,
 				4593F75914C7C0A300F78F92 /* CLinkingCoreTextLabel.m in Sources */,
 				4593F76614C7D01D00F78F92 /* NSAttributedString_Extensions.m in Sources */,
+				83E4C2E2187629F20004D2D2 /* NSCharacterSet_HTMLExtensions.m in Sources */,
 				45161E8E1635E14600E74EF1 /* CSimpleViewController.m in Sources */,
 				45FB0A38163762A70093F35B /* UIImage+AnimatedConveniences.m in Sources */,
 				45AB2C7B1685135B0089773A /* CAutolayoutViewController.m in Sources */,
