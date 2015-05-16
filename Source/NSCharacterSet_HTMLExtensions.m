@@ -20,4 +20,14 @@
   return _quoteCharacterSet;
 }
 
++ (NSCharacterSet *)spaceAndCloseTagCharacterSet {
+  static NSCharacterSet *_characterSet;
+  static dispatch_once_t predicate;
+  dispatch_once(&predicate, ^{
+    _characterSet = [NSCharacterSet characterSetWithCharactersInString:@" >"];
+  });
+
+  return _characterSet;
+}
+
 @end

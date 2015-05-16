@@ -36,7 +36,11 @@ NSString *const kMarkupOutlineAttributeName = @"com.touchcode.outline";
             {
             theFont = [UIFont fontWithCTFont:theCTFont];
             }
-        
+        else if (attrs[NSFontAttributeName] != NULL)
+            {
+            theFont = attrs[NSFontAttributeName];
+            }
+
         attrs = [self normalizeAttributes:attrs baseFont:theFont];
         [theString setAttributes:attrs range:range];
         }];

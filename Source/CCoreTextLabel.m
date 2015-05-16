@@ -355,6 +355,11 @@
             NSDictionary *theAttributes2 = (__bridge NSDictionary *)CTRunGetAttributes(inRun);
             
             CTFontRef theFont = (__bridge CTFontRef)theAttributes2[(__bridge NSString *)kCTFontAttributeName];
+            if (theFont == NULL && theAttributes2[NSFontAttributeName] != NULL)
+                {
+                UIFont *theUIFont = theAttributes2[NSFontAttributeName];
+                theFont = theUIFont.CTFont;
+                }
             
             CGFloat theXHeight = CTFontGetXHeight(theFont);
             
@@ -499,6 +504,40 @@
 	self.attachmentViews = theAttachmentViews;
 	}
 
++ (CTParagraphStyleRef)createParagraphStyleFromNSParagraphStyle:(NSParagraphStyle *)paragraphStyle
+    {
+    CTTextAlignment alignment = NSTextAlignmentToCTTextAlignment(paragraphStyle.alignment);
+    CGFloat firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
+    CGFloat headIndent = paragraphStyle.headIndent;
+    CGFloat tailIndent = paragraphStyle.tailIndent;
+    CGFloat defaultTabInterval = paragraphStyle.defaultTabInterval;
+    NSLineBreakMode lineBreakMode = paragraphStyle.lineBreakMode;
+    CGFloat lineHeightMultiple = paragraphStyle.lineHeightMultiple;
+    CGFloat maximumLineHeight = paragraphStyle.maximumLineHeight;
+    CGFloat minimumLineHeight = paragraphStyle.minimumLineHeight;
+    CGFloat lineSpacing = paragraphStyle.lineSpacing;
+    CGFloat paragraphSpacing = paragraphStyle.paragraphSpacing;
+    CGFloat paragraphSpacingBefore = paragraphStyle.paragraphSpacingBefore;
+    NSWritingDirection baseWritingDirection = paragraphStyle.baseWritingDirection;
+    const CTParagraphStyleSetting styleSettings[] =
+        {
+        {kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &alignment},
+        {kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(CGFloat), &firstLineHeadIndent},
+        {kCTParagraphStyleSpecifierHeadIndent, sizeof(CGFloat), &headIndent},
+        {kCTParagraphStyleSpecifierTailIndent, sizeof(CGFloat), &tailIndent},
+        {kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(CGFloat), &defaultTabInterval},
+        {kCTParagraphStyleSpecifierLineBreakMode, sizeof(CTLineBreakMode), &lineBreakMode},
+        {kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), &lineHeightMultiple},
+        {kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(CGFloat), &maximumLineHeight},
+        {kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minimumLineHeight},
+        {kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &lineSpacing},
+        {kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &paragraphSpacing},
+        {kCTParagraphStyleSpecifierParagraphSpacingBefore, sizeof(CGFloat), &paragraphSpacingBefore},
+        {kCTParagraphStyleSpecifierBaseWritingDirection, sizeof(CTWritingDirection), &baseWritingDirection},
+        };
+    return CTParagraphStyleCreate(styleSettings, sizeof(styleSettings));
+    }
+
 + (CTParagraphStyleRef)createParagraphStyleForAttributes:(NSDictionary *)inAttributes alignment:(CTTextAlignment)inTextAlignment lineBreakMode:(CTLineBreakMode)inLineBreakMode
     {
     CGFloat theFirstLineHeadIndent;
@@ -517,6 +556,10 @@
 
     BOOL createdCurrentStyle = NO;
     CTParagraphStyleRef currentParagraphStyle = (__bridge CTParagraphStyleRef)inAttributes[(__bridge NSString *)kCTParagraphStyleAttributeName];
+    if (currentParagraphStyle == NULL && inAttributes[NSParagraphStyleAttributeName] != NULL)
+        {
+        currentParagraphStyle = [self createParagraphStyleFromNSParagraphStyle:inAttributes[NSParagraphStyleAttributeName]];
+        }
     if (currentParagraphStyle == NULL)
         {
         // Create default style
@@ -577,11 +620,11 @@
 
     UIColor *theTextColor = [inSettings valueForKey:@"textColor"] ?: [UIColor blackColor];
     [theMutableText enumerateAttributesInRange:(NSRange){ .length = theMutableText.length } options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-        if (attrs[(__bridge NSString *)kCTFontAttributeName] == NULL)
+        if (attrs[(__bridge NSString *)kCTFontAttributeName] == NULL && attrs[NSFontAttributeName] == NULL)
             {
             [theMutableText addAttribute:(__bridge NSString *)kCTFontAttributeName value:(__bridge id)theFont.CTFont range:range];
             }
-        if (attrs[(__bridge NSString *)kCTForegroundColorAttributeName] == NULL)
+        if (attrs[(__bridge NSString *)kCTForegroundColorAttributeName] == NULL && attrs[NSForegroundColorAttributeName] == NULL)
             {
             [theMutableText addAttribute:(__bridge NSString *)kCTForegroundColorAttributeName value:(__bridge id)theTextColor.CGColor range:range];
             }

@@ -60,6 +60,7 @@ NSString *const kSimpleHTMLParserErrorDomain = @"kSimpleHTMLParserErrorDomain";
     static dispatch_once_t sOnceToken;
     dispatch_once(&sOnceToken, ^{
         sEntities = @{
+            @"#39":@"'",
 			@"quot": @"\"",
             @"amp": @"&",
             @"apos": @"'",

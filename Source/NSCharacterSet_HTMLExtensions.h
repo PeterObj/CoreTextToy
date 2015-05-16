@@ -11,5 +11,6 @@
 @interface NSCharacterSet (HTMLExtensions)
 
 + (NSCharacterSet *)quoteCharacterSet;
++ (NSCharacterSet *)spaceAndCloseTagCharacterSet;
 
 @end

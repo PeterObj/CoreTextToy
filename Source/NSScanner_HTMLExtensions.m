@@ -69,16 +69,17 @@
 
         if ([self scanString:@"=" intoString:NULL] == YES)
             {
-            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
+            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == YES)
                 {
-                self.scanLocation = theSavedScanLocation;
-                self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
-                return(NO);
+                [self scanUpToCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:&theAttributeValue];
+                if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
+                    {
+                    self.scanLocation = theSavedScanLocation;
+                    self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
+                    return(NO);
+                    }
                 }
-
-            [self scanUpToCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:&theAttributeValue];
-
-            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
+            else if ([self scanUpToCharactersFromSet:[NSCharacterSet spaceAndCloseTagCharacterSet] intoString:&theAttributeValue] == NO)
                 {
                 self.scanLocation = theSavedScanLocation;
                 self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
@@ -185,16 +186,17 @@
 
         if ([self scanString:@"=" intoString:NULL] == YES)
             {
-            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
+            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == YES)
                 {
-                self.scanLocation = theSavedScanLocation;
-                self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
-                return(NO);
+                [self scanUpToCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:&theAttributeValue];
+                if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
+                    {
+                    self.scanLocation = theSavedScanLocation;
+                    self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
+                    return(NO);
+                    }
                 }
-
-            [self scanUpToCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:&theAttributeValue];
-
-            if ([self scanCharactersFromSet:[NSCharacterSet quoteCharacterSet] intoString:NULL] == NO)
+            else if ([self scanUpToCharactersFromSet:[NSCharacterSet spaceAndCloseTagCharacterSet] intoString:&theAttributeValue] == NO)
                 {
                 self.scanLocation = theSavedScanLocation;
                 self.charactersToBeSkipped = theSavedCharactersToBeSkipped;
